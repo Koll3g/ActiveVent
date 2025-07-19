@@ -6,8 +6,6 @@ void setup() {
   Serial.begin(9600);
   speedKnob_init(PIN_A0,1023);
   fan_init();
-  pinMode(PIN7,OUTPUT);
-  digitalWrite(PIN7,HIGH);
 }
 
 void loop() {
