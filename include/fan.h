@@ -6,7 +6,7 @@
 void fan_init();
 
 void fan_rpmInteruptHandler();
-unsigned long fan_getRpm();
+uint16_t fan_getRpm();
 
 /**
  * @brief Set the speed from 0-100
