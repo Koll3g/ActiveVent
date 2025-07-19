@@ -1,15 +1,10 @@
 #include <speedKnob.h>
 #include <Arduino.h>
 
-static uint8_t speedKnob_readPin;
-static int speedKnob_upperLimit;
-
-void speedKnob_init(uint8_t pin, int upperLimit){
-    speedKnob_readPin = pin;
-    speedKnob_upperLimit = upperLimit;
-}
+#define SPEEDKNOB_PIN A0 
+#define SPEEDKNOB_UPPERLIMIT 1023
 
 int speedKnob_readPosition(){
-    uint32_t rawPosition = analogRead(speedKnob_readPin);
-    return (rawPosition * 100 / speedKnob_upperLimit);
+    uint32_t rawPosition = analogRead(SPEEDKNOB_PIN);
+    return (rawPosition * 100 / SPEEDKNOB_UPPERLIMIT);
 }

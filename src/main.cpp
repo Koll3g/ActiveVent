@@ -2,18 +2,31 @@
 #include <speedKnob.h>
 #include <fan.h>
 
+#define DEBUG_ON
+
+void fanControl();
+
 void setup() {
-  Serial.begin(9600);
-  speedKnob_init(PIN_A0,1023);
+  #ifdef DEBUG_ON
+    Serial.begin(9600);
+  #endif
+  
   fan_init();
 }
 
 void loop() {
-  int speedKnobPosition = speedKnob_readPosition();
-  Serial.print("Knob: ");
-  Serial.println(speedKnobPosition);
-  fan_setSpeed(speedKnobPosition);
-  Serial.print("RPM: ");
-  Serial.println(fan_getRpm());
+  fanControl();
   delay(500);
+}
+
+void fanControl(){
+  int speedKnobPosition = speedKnob_readPosition();
+  fan_setSpeed(speedKnobPosition);
+
+  #ifdef DEBUG_ON
+    Serial.print("Knob: ");
+    Serial.println(speedKnobPosition);
+    Serial.print("RPM: ");
+    Serial.println(fan_getRpm());
+  #endif
 }
