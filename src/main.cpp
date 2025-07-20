@@ -1,8 +1,9 @@
 #include <Arduino.h>
 #include <speedKnob.h>
 #include <fan.h>
+#include <speedSwitch.h>
 
-#define DEBUG_ON
+// #define DEBUG_ON
 
 void fanControl();
 
@@ -12,6 +13,7 @@ void setup() {
   #endif
   
   fan_init();
+  speedSwitch_init();
 }
 
 void loop() {
@@ -20,13 +22,20 @@ void loop() {
 }
 
 void fanControl(){
-  int speedKnobPosition = speedKnob_readPosition();
-  fan_setSpeed(speedKnobPosition);
+  if(speedSwitch_ignoreSpeedKnob()){
+    fan_setSpeed(speedKnob_readPosition());
+  }
+  else{
+    fan_setSpeed(100);
+  }
 
   #ifdef DEBUG_ON
     Serial.print("Knob: ");
-    Serial.println(speedKnobPosition);
-    Serial.print("RPM: ");
-    Serial.println(fan_getRpm());
+    Serial.print(speedKnob_readPosition());
+    Serial.print(" | RPM: ");
+    Serial.print(fan_getRpm());
+    Serial.print(" | Switch: ");
+    Serial.println(speedSwitch_ignoreSpeedKnob());
   #endif
 }
+
